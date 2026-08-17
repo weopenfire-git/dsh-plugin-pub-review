@@ -1,7 +1,7 @@
 {
   "name": "@yinging/dsh-plugin-doctor",
   "description": "dsh-plugin-doctor: review DeepSeek Harness plugins against official docs and conventions, check whether official docs changed, and guide the publish flow.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publishConfig": { "access": "public" },
   "type": "module",
   "main": "lib/index.js",
