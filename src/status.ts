@@ -28,7 +28,7 @@ export function renderBanner(version: string, commands: readonly string[]): stri
     : '（未挂载 commands 服务，仅保留工具能力）'
   return [
     '╭' + bar + '╮',
-    row(`dsh-plugin-doctor v${version} — 给 dsh 插件做体检`),
+    row(`dsh-plugin-pub-review v${version} — 给 dsh 插件做发布就绪审查`),
     row(''),
     row('体检流程：docs-check → plugin-review → plugin-publish'),
     row('斜杠命令：' + commandLine),
@@ -41,9 +41,9 @@ export function renderBanner(version: string, commands: readonly string[]): stri
 /** Usage guidance rendered by the /doctor-help command. */
 export function renderHelp(): string {
   return [
-    '# dsh-plugin-doctor — 使用引导',
+    '# dsh-plugin-pub-review — 使用引导',
     '',
-    '体检流程（医院比喻）：',
+    '发布就绪审查流程（医院比喻）：',
     '  [1] docs-check      审查前核对官方插件开发文档是否更新（GitHub sha 对比，本地 checkout 兜底）',
     '  [2] plugin-review   静态体检目标仓库：30+ 项检查 → ✅/⚠️/❌ 清单 + 修复药方 + 发布就绪判定',
     '  [3] plugin-publish  只读预检（typecheck / test / build / npm pack）+ 发布命令序列引导',

@@ -1,8 +1,8 @@
-# dsh-plugin-doctor — 给 dsh 插件做体检
+# dsh-plugin-pub-review — 发布就绪审查：给 dsh 插件做体检
 
 [English](README.en.md) | [中文](README.md)
 
-> 诊断、审查、发布引导三合一的 DeepSeek Harness 插件：帮「别的插件」对照官方文档与规范做体检，审查前先查官方文档有没有更新，最后引导发布流程。
+> 发布前一站式审查（publish-readiness review）：**查官方文档有没有更新 → 按官方规范做 30+ 项静态体检 → 只读预检 + 发布命令引导**。让「能不能发布」有依据，而不是靠感觉。
 
 ## 体检流程（医院比喻）
 
@@ -11,12 +11,25 @@
  (docs-check)     (plugin-review)    (✅/❌/⚠️ 药方)   (plugin-publish)
 ```
 
+## 🎯 定位（与同类工具的分工）
+
+dsh 生态里做「插件体检」的工具不少，本插件的分工是**发布就绪审查**：
+
+| 层面 | 工具 | 干什么 |
+|---|---|---|
+| 规范与文档 | **dsh-plugin-pub-review（本插件）** | 对照**官方文档**查规范：文档新鲜度 + 30+ 项静态检查 + 发布命令引导 |
+| 运行与安装 | [zoahdev/dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) | 运行级验证：真实装包、fresh-profile 安装、供应链/环境诊断 |
+
+- 它验证「装不装得上、安不安全」；本插件回答「**符不符合官方文档与规范、怎么发**」。
+- 本插件的 publish 预检止步于 `npm pack --dry-run`；安装级验证是 zoahdev 版的范畴。
+- 互补不重叠，可先后使用：先跑本插件过规范，再跑它做运行验证。
+
 ## 🚀 现状
 
 | 版本 | 亮点 |
 |---|---|
-| v0.1.1 | 启动横幅 + `/doctor-help` 引导命令；README 补全流程/检查点/架构/配置说明 |
-| v0.1.0 | 三个工具完整实现 + `/plugin-review`、`/plugin-publish` 斜杠命令 + 测试齐全 |
+| v0.2.0 | 更名 dsh-plugin-pub-review（原 dsh-plugin-doctor），突出「发布就绪审查」定位 |
+| v0.1.x | 三个工具 + 斜杠命令 + 启动横幅 + 测试 |
 
 ## 工具
 
@@ -25,7 +38,7 @@
 避免用过期规则「错诊」：审查前自动核对官方插件开发文档是否更新。
 
 - **多源回退**：优先 GitHub contents API（按文件 `sha` 快速比对，网络实测可达 200）；失败时自动回退本地 DSHarness checkout
-- **状态持久化**：`~/.dsh/plugin-doctor/docs-state.json` 记录每篇上次 `sha` 与检查时间；官方规则更新时提醒「规则库需要复核」
+- **状态持久化**：`~/.dsh/plugin-pub-review/docs-state.json` 记录每篇上次 `sha` 与检查时间；官方规则更新时提醒「规则库需要复核」
 
 ### 2. plugin-review —— 静态「全身体检」与诊断
 
@@ -64,11 +77,11 @@
 
 ```yaml
 - insert:
-    - id: dsh-plugin-doctor
+    - id: dsh-plugin-pub-review
       name: file:///D:/work/ClaudeCode/dsh-plugin-doctor/src/index.ts
 ```
 
-**正式使用**：`dsh plugin --profile <name> add @yinging/dsh-plugin-doctor`
+**正式使用**：`dsh plugin --profile <name> add @yinging/dsh-plugin-pub-review`
 
 **使用**：加载后终端打印启动横幅；斜杠命令：
 
@@ -81,7 +94,7 @@
 | 字段 | 默认 | 含义 |
 |---|---|---|
 | docsUrls | basic 四篇 contents API | 要查更新的官方文档 |
-| docsStateFile | ~/.dsh/plugin-doctor/docs-state.json | 上次哈希状态 |
+| docsStateFile | ~/.dsh/plugin-pub-review/docs-state.json | 上次哈希状态 |
 | checkDocsBeforeReview | true | review 前先查文档 |
 | autoRunGit | false | publish 是否自动跑 git 步骤 |
 
@@ -89,5 +102,6 @@
 
 ## Changelog
 
-- v0.1.1 — 启动横幅与 `/doctor-help` 引导命令；README 补全体检流程、检查点表、架构与配置说明。
-- v0.1.0 — 首个发布：三个工具完整实现（docs-check 多源哈希对比、plugin-review 静态体检、plugin-publish 预检 + 命令生成）、两个斜杠命令、vitest 用例、发布到 npm。
+- v0.2.0 — 更名 **dsh-plugin-pub-review**（原 dsh-plugin-doctor，npm 旧包已弃用），明确「发布就绪审查」定位：官方文档符合性 + 静态规范体检 + 发布引导；文档状态路径改为 `~/.dsh/plugin-pub-review/`。
+- v0.1.1 — 启动横幅与 `/doctor-help` 引导命令；README 补全流程/检查点/架构/配置说明。
+- v0.1.0 — 首个发布：三个工具完整实现（docs-check 多源哈希对比、plugin-review 静态体检、plugin-publish 预检 + 命令生成）、两个斜杠命令、vitest 用例。

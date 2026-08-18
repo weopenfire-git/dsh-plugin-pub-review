@@ -7,7 +7,7 @@ import { pluginPublishTool, runPluginPublish } from './tools/publish.ts'
 import { pluginReviewTool, runPluginReview } from './tools/review.ts'
 import { VERSION } from './version.ts'
 
-export const name = 'dsh-plugin-doctor'
+export const name = 'dsh-plugin-pub-review'
 export const inject = ['tools']
 
 export { Config }
@@ -55,17 +55,17 @@ function registerCommands(ctx: Context, config: Config): string[] {
   })
   commands.register({
     name: 'doctor-help',
-    description: '显示 dsh-plugin-doctor 的体检流程与使用引导。',
+    description: '显示 dsh-plugin-pub-review 的体检流程与使用引导。',
     handler: () => ({ kind: 'success', text: renderHelp() }),
   })
   return ['plugin-review', 'plugin-publish', 'doctor-help']
 }
 
 /**
- * dsh-plugin-doctor: review other DeepSeek Harness plugins against official
- * docs and conventions, check whether the official plugin-dev docs changed,
- * and preflight/guide the publish flow. Three tools plus optional slash
- * commands and a startup banner.
+ * dsh-plugin-pub-review: review other DeepSeek Harness plugins against
+ * official docs and conventions, check whether the official plugin-dev docs
+ * changed, and preflight/guide the publish flow. Three tools plus optional
+ * slash commands and a startup banner.
  */
 export function apply(ctx: Context, config: Config): void {
   ctx.tools.register(docsCheckTool(config))

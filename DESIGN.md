@@ -1,4 +1,4 @@
-# dsh-plugin-doctor 设计文档
+# dsh-plugin-pub-review 设计文档（v0.2.0 起更名，原 dsh-plugin-doctor）
 
 > 三个工具已按本文件的实现顺序建议全部实现（docs-check、plugin-review、plugin-publish，外加两个斜杠命令），测试通过并发布为 v0.1.0。本文保留为设计记录。
 
@@ -21,7 +21,7 @@
 
 **默认文档集**（官方插件开发四篇）：`basic/{index,config,tool,publish}.md`。
 
-**状态文件**：`~/.dsh/plugin-doctor/docs-state.json`（每篇 sha + 上次检查时间）。
+**状态文件**：`~/.dsh/plugin-pub-review/docs-state.json`（每篇 sha + 上次检查时间）。
 
 **输出**：每篇「自 <时间> 未变 / 已更新」，若更新则提示「规则库需要复核」。
 
@@ -67,7 +67,7 @@ pnpm publish   # 需要用户 2FA
 | 字段 | 默认 | 含义 |
 |---|---|---|
 | docsUrls | basic 四篇 contents API | 要查更新的官方文档 |
-| docsStateFile | ~/.dsh/plugin-doctor/docs-state.json | 上次哈希状态 |
+| docsStateFile | ~/.dsh/plugin-pub-review/docs-state.json | 上次哈希状态 |
 | checkDocsBeforeReview | true | review 前先查文档 |
 | autoRunGit | false | publish 是否自动跑 git 步骤 |
 

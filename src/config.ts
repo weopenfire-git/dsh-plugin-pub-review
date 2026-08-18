@@ -2,7 +2,7 @@ import { dshHomePath } from '@deepseek-ai/dsh-home-paths'
 import z from '@deepseek-ai/schemastery'
 
 /**
- * dsh-plugin-doctor configuration.
+ * dsh-plugin-pub-review configuration.
  *
  * The doctor runs a checkup on another dsh plugin repo: first it checks
  * whether the official plugin-dev docs changed (docs-check), then it audits
@@ -32,7 +32,7 @@ export const Config: z<Config> = z.object({
     'https://api.github.com/repos/deepseek-ai/deepseek-harness/contents/docs/user/develop/basic/tool.md',
     'https://api.github.com/repos/deepseek-ai/deepseek-harness/contents/docs/user/develop/basic/publish.md',
   ]),
-  docsStateFile: z.string().default(dshHomePath('plugin-doctor', 'docs-state.json')),
+  docsStateFile: z.string().default(dshHomePath('plugin-pub-review', 'docs-state.json')),
   checkDocsBeforeReview: z.boolean().default(true),
   autoRunGit: z.boolean().default(false),
 })

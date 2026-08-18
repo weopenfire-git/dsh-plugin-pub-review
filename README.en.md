@@ -1,8 +1,8 @@
-# dsh-plugin-doctor — checkup for dsh plugins
+# dsh-plugin-pub-review — publish-readiness review for dsh plugins
 
 [English](README.en.md) | [中文](README.md)
 
-> A diagnose / review / publish-guidance plugin for DeepSeek Harness: checks other plugins against the official docs and conventions, verifies the official docs have not changed before reviewing, then guides the publish flow.
+> One-stop publish-readiness review: **check whether the official docs changed → run 30+ static checks against the official conventions → read-only preflight + publish command guidance**. "Can this plugin be published?" becomes evidence-based, not a feeling.
 
 ## Checkup flow (hospital metaphor)
 
@@ -11,12 +11,25 @@
  (docs-check)      (plugin-review)      (✅/❌/⚠️ fix)      (plugin-publish)
 ```
 
+## 🎯 Positioning (division of labor)
+
+Several "plugin health check" tools exist in the dsh ecosystem; this plugin owns **publish-readiness review**:
+
+| Layer | Tool | What it does |
+|---|---|---|
+| Conventions & docs | **dsh-plugin-pub-review (this plugin)** | Checks against the **official docs**: docs freshness + 30+ static checks + publish command guidance |
+| Runtime & install | [zoahdev/dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) | Runtime-level verification: real packing, fresh-profile install, supply-chain/environment diagnostics |
+
+- It verifies "does it install, is it safe"; this plugin answers "**does it conform to the official docs and conventions, and how to publish**".
+- This plugin's preflight stops at `npm pack --dry-run`; install-level verification belongs to zoahdev's.
+- Complementary, not overlapping — use both in sequence: pass this one for conventions, then theirs for runtime.
+
 ## Status
 
 | Version | Highlights |
 |---|---|
-| v0.1.1 | Startup banner + `/doctor-help` guidance command; README covers the flow, checkpoints, architecture and config |
-| v0.1.0 | All three tools implemented + `/plugin-review`, `/plugin-publish` slash commands + full test suite |
+| v0.2.0 | Renamed to dsh-plugin-pub-review (formerly dsh-plugin-doctor), sharpening the publish-readiness positioning |
+| v0.1.x | Three tools + slash commands + startup banner + tests |
 
 ## Tools
 
@@ -25,7 +38,7 @@
 Avoid diagnosing with stale rules: automatically verify the official plugin-dev docs have not changed since the last check.
 
 - **Multi-source fallback**: GitHub contents API first (fast per-file `sha` compare; reachable in practice), falling back to a local DeepSeek Harness checkout on failure
-- **Persisted state**: `~/.dsh/plugin-doctor/docs-state.json` records the last `sha` and check time per doc; an update triggers a "rule set needs re-review" reminder
+- **Persisted state**: `~/.dsh/plugin-pub-review/docs-state.json` records the last `sha` and check time per doc; an update triggers a "rule set needs re-review" reminder
 
 ### 2. plugin-review — static full-body checkup
 
@@ -64,11 +77,11 @@ Runs **30+ static checks** on a target plugin repo and outputs a ✅/⚠️/❌ 
 
 ```yaml
 - insert:
-    - id: dsh-plugin-doctor
+    - id: dsh-plugin-pub-review
       name: file:///D:/work/ClaudeCode/dsh-plugin-doctor/src/index.ts
 ```
 
-**Installed**: `dsh plugin --profile <name> add @yinging/dsh-plugin-doctor`
+**Installed**: `dsh plugin --profile <name> add @yinging/dsh-plugin-pub-review`
 
 **Use**: a startup banner is printed when the plugin loads; slash commands:
 
@@ -81,7 +94,7 @@ Runs **30+ static checks** on a target plugin repo and outputs a ✅/⚠️/❌ 
 | Field | Default | Meaning |
 |---|---|---|
 | docsUrls | the four basic contents API URLs | official docs to freshness-check |
-| docsStateFile | ~/.dsh/plugin-doctor/docs-state.json | last-checked hash state |
+| docsStateFile | ~/.dsh/plugin-pub-review/docs-state.json | last-checked hash state |
 | checkDocsBeforeReview | true | run docs-check before a review |
 | autoRunGit | false | whether publish runs the git steps |
 
@@ -89,5 +102,6 @@ Runs **30+ static checks** on a target plugin repo and outputs a ✅/⚠️/❌ 
 
 ## Changelog
 
+- v0.2.0 — renamed to **dsh-plugin-pub-review** (formerly dsh-plugin-doctor; the old npm package is deprecated), sharpening the publish-readiness positioning: official-docs conformance + static review + publish guidance; the docs state path moved to `~/.dsh/plugin-pub-review/`.
 - v0.1.1 — startup banner and `/doctor-help` guidance command; README covers the checkup flow, checkpoint table, architecture and config.
-- v0.1.0 — first release: all three tools implemented (docs-check multi-source sha compare, plugin-review static audit, plugin-publish preflight + command generation), two slash commands, vitest suite, published to npm.
+- v0.1.0 — first release: all three tools implemented (docs-check multi-source sha compare, plugin-review static audit, plugin-publish preflight + command generation), two slash commands, vitest suite.
