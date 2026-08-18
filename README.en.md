@@ -23,7 +23,7 @@ A publish-readiness review answers two questions: **can this plugin be published
 
 | Version | Highlights |
 |---|---|
-| v0.2.1 | README rework: no other plugins named in the main body; the tool-comparison table moved to the end |
+| v0.2.1+ | README rework and citation cleanup: no other plugins named in the main body; comparison table moved to the end; template citation removed |
 | v0.2.0 | Renamed to dsh-plugin-pub-review (formerly dsh-plugin-doctor), sharpening the publish-readiness positioning |
 | v0.1.x | Three tools + slash commands + startup banner + tests |
 
@@ -115,6 +115,7 @@ Several dsh tools cover plugin health / review / verification. The table compare
 
 ## Changelog
 
+- v0.2.2 — README cleanup: removed the closing template-citation line.
 - v0.2.1 — README rework: no other plugins named in the main body; the tool-comparison table moved to the end.
 - v0.2.0 — renamed to **dsh-plugin-pub-review** (formerly dsh-plugin-doctor; the old npm package is deprecated), sharpening the publish-readiness positioning: official-docs conformance + static review + publish guidance; the docs state path moved to `~/.dsh/plugin-pub-review/`.
 - v0.1.1 — startup banner and `/doctor-help` guidance command; README covers the checkup flow, checkpoint table, architecture and config.
