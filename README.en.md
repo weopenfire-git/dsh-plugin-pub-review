@@ -78,7 +78,7 @@ Runs **30+ static checks** on a target plugin repo and outputs a ✅/⚠️/❌ 
 ```yaml
 - insert:
     - id: dsh-plugin-pub-review
-      name: file:///D:/work/ClaudeCode/dsh-plugin-doctor/src/index.ts
+      name: file:///D:/work/ClaudeCode/dsh-plugin-pub-review/src/index.ts
 ```
 
 **Installed**: `dsh plugin --profile <name> add @yinging/dsh-plugin-pub-review`

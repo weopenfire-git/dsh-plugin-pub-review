@@ -78,7 +78,7 @@ dsh 生态里做「插件体检」的工具不少，本插件的分工是**发�
 ```yaml
 - insert:
     - id: dsh-plugin-pub-review
-      name: file:///D:/work/ClaudeCode/dsh-plugin-doctor/src/index.ts
+      name: file:///D:/work/ClaudeCode/dsh-plugin-pub-review/src/index.ts
 ```
 
 **正式使用**：`dsh plugin --profile <name> add @yinging/dsh-plugin-pub-review`
