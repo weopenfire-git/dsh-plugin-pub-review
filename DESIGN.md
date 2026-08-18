@@ -1,6 +1,6 @@
 # dsh-plugin-pub-review 设计文档（v0.2.0 起更名，原 dsh-plugin-doctor）
 
-> 三个工具已按本文件的实现顺序建议全部实现（docs-check、plugin-review、plugin-publish，外加两个斜杠命令），测试通过并发布为 v0.1.0。本文保留为设计记录。
+> 三个工具已按本文件的实现顺序建议全部实现（docs-check、plugin-review、plugin-publish，外加两个斜杠命令），测试通过并发布到 npm；v0.2.0 起更名为 dsh-plugin-pub-review，定位收窄为「发布就绪审查」。本文保留为设计记录。
 
 ## 定位
 
