@@ -94,8 +94,6 @@ Runs **30+ static checks** on a target plugin repo and outputs a ✅/⚠️/❌ 
 | checkDocsBeforeReview | true | run docs-check before a review |
 | autoRunGit | false | whether publish runs the git steps |
 
-> Standalone plugin repo following the dsh plugin conventions (skeleton from the `dsh-plugin-skeleton` skill, see hme-plugin).
-
 ## Comparison with similar tools
 
 Several dsh tools cover plugin health / review / verification. The table compares them by **coverage stage** (per each repo's official description; "—" means that description does not cover the stage):

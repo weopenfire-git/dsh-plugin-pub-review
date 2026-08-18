@@ -94,8 +94,6 @@
 | checkDocsBeforeReview | true | review 前先查文档 |
 | autoRunGit | false | publish 是否自动跑 git 步骤 |
 
-> 独立插件仓库，符合 dsh 插件规范（骨架见 hme-plugin 的 `dsh-plugin-skeleton` skill）。
-
 ## 同类工具对比
 
 dsh 生态中做「插件健康/审查/验证」的工具不止一个，下表按**覆盖环节**对比（以各仓库官方描述为准，「—」表示该工具描述未覆盖此环节）：
