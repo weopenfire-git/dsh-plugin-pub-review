@@ -1,2 +1,2 @@
 /** dsh-plugin-pub-review semantic version, kept in sync with package.json. */
-export const VERSION = '0.2.2'
+export const VERSION = '0.2.3'

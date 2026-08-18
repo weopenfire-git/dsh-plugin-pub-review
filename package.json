@@ -1,7 +1,7 @@
 {
   "name": "@yinging/dsh-plugin-pub-review",
   "description": "dsh-plugin-pub-review: publish-readiness review for DeepSeek Harness plugins — official docs freshness check (docs-check), 30+ static checks with a Ready/Not-Ready verdict (plugin-review), and publish preflight + command guidance (plugin-publish).",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publishConfig": { "access": "public" },
   "type": "module",
   "main": "lib/index.js",

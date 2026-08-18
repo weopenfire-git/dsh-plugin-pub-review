@@ -23,7 +23,7 @@ A publish-readiness review answers two questions: **can this plugin be published
 
 | Version | Highlights |
 |---|---|
-| v0.2.1+ | README rework and citation cleanup: no other plugins named in the main body; comparison table moved to the end; template citation removed |
+| v0.2.1+ | README rework and calibration: no other plugins named in the main body; comparison table moved to the end with partial-match markers calibrated |
 | v0.2.0 | Renamed to dsh-plugin-pub-review (formerly dsh-plugin-doctor), sharpening the publish-readiness positioning |
 | v0.1.x | Three tools + slash commands + startup banner + tests |
 
@@ -96,13 +96,13 @@ Runs **30+ static checks** on a target plugin repo and outputs a ✅/⚠️/❌ 
 
 ## Comparison with similar tools
 
-Several dsh tools cover plugin health / review / verification. The table compares them by **coverage stage** (per each repo's official description; "—" means that description does not cover the stage):
+Several dsh tools cover plugin health / review / verification. The table compares them by **coverage stage** (per each repo's official description: "—" means the description does not cover the stage; ⚠️ means partial, e.g. a verdict without the full capability):
 
 | Tool | Docs freshness | Static conventions | Build/pack | Install verification | Env diagnostics | Publish guidance | Official positioning (summary) |
 |---|---|---|---|---|---|---|---|
 | **dsh-plugin-pub-review (this plugin)** | ✅ | ✅ (30+) | ✅ (read-only preflight) | — | — | ✅ (git sequence + npm guidance) | Publish-readiness review: official-docs conformance + static audit + publish guidance |
 | [dsh-plugin-check](https://github.com/dsh-external/dsh-plugin-check) | — | ✅ | — | — | — | — | Plugin health checks (manifest/patch format, build pitfalls, hub status) |
-| [zoahdev/dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) | — | ✅ | ✅ | ✅ (fresh-profile install) | ✅ | ✅ (check/preflight verdict) | Runtime-level verification: packing, install, supply-chain preflight, env diagnostics |
+| [zoahdev/dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) | — | ✅ | ✅ | ✅ (fresh-profile install) | ✅ | ⚠️ (preflight/check verdict, no git sequence) | Runtime-level verification: packing, install, supply-chain preflight, env diagnostics |
 | [dsh-test-drive](https://github.com/PerryLink/dsh-test-drive) | — | — | — | ✅ (install-smoke-uninstall) | — | — | Isolated install-smoke-uninstall test drives for DSH plugins |
 | [dsh-inspect](https://github.com/dsh-external/dsh-inspect) | — | ✅ (adversarial) | — | — | — | — | checkup → fix → review adversarial loop |
 | [dsh-review-loop](https://github.com/wuxiangru915/dsh-review-loop) | — | — | — | — | — | — | Incremental diff review loop (code review, not plugin health) |
@@ -111,10 +111,11 @@ Several dsh tools cover plugin health / review / verification. The table compare
 | [dsh-verification-receipt](https://github.com/030611/dsh-verification-receipt) | — | — | — | — | — | — | Per-turn tool counts and coarse verification signals to local JSONL |
 | [dsh-doctor](https://github.com/ciceroyang/dsh-doctor) | — | — | — | — | ✅ | — | One-command local environment health check (versions/port/config/session logs) |
 
-**Conclusion**: the two stages unique to this plugin are **docs freshness** and **publish command guidance** — no other tool covers them. Static convention checks partially overlap but differ in focus (a hand-written checklist against the official basic docs + skeleton rules). Install verification and environment diagnostics are intentionally out of scope here (see Honest boundaries); for a full publish checkup, run this plugin for conventions first, then pair it with install/environment verification tools for the runtime side.
+**Conclusion**: the two things unique to this plugin are **docs freshness** and **git commit/tag/push command-sequence generation** — no other tool covers the former; on the latter, zoahdev's only offers a `preflight/check` verdict (evaluating readiness and which path to take) without emitting an executable publish command sequence (see the ⚠️ in the table). Static convention checks partially overlap but differ in focus (a hand-written checklist against the official basic docs + skeleton rules). Install verification and environment diagnostics are intentionally out of scope here (see Honest boundaries); for a full publish checkup, run this plugin for conventions first, then pair it with install/environment verification tools for the runtime side.
 
 ## Changelog
 
+- v0.2.3 — comparison-table calibration: zoahdev's "publish guidance" marked ⚠️ partial (has a preflight/check verdict, no git command sequence); the conclusion now reads "docs freshness + git sequence generation" as the two unique items.
 - v0.2.2 — README cleanup: removed the closing template-citation line.
 - v0.2.1 — README rework: no other plugins named in the main body; the tool-comparison table moved to the end.
 - v0.2.0 — renamed to **dsh-plugin-pub-review** (formerly dsh-plugin-doctor; the old npm package is deprecated), sharpening the publish-readiness positioning: official-docs conformance + static review + publish guidance; the docs state path moved to `~/.dsh/plugin-pub-review/`.

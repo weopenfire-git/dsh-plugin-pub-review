@@ -23,7 +23,7 @@
 
 | 版本 | 亮点 |
 |---|---|
-| v0.2.1+ | README 重构并清理外部引用：主文不点名其他插件，工具对比移至文末；移除模板出处引用 |
+| v0.2.1+ | README 重构与校准：主文不点名其他插件；对比表移至文末并校准部分符合标注 |
 | v0.2.0 | 更名 dsh-plugin-pub-review（原 dsh-plugin-doctor），突出「发布就绪审查」定位 |
 | v0.1.x | 三个工具 + 斜杠命令 + 启动横幅 + 测试 |
 
@@ -96,13 +96,13 @@
 
 ## 同类工具对比
 
-dsh 生态中做「插件健康/审查/验证」的工具不止一个，下表按**覆盖环节**对比（以各仓库官方描述为准，「—」表示该工具描述未覆盖此环节）：
+dsh 生态中做「插件健康/审查/验证」的工具不止一个，下表按**覆盖环节**对比（以各仓库官方描述为准：「—」表示描述未覆盖此环节，⚠️ 表示部分符合，如仅有判定而无完整能力）：
 
 | 工具 | 文档新鲜度 | 静态规范检查 | 构建/打包 | 安装验证 | 环境诊断 | 发布引导 | 官方定位（摘要） |
 |---|---|---|---|---|---|---|---|
 | **dsh-plugin-pub-review（本插件）** | ✅ | ✅（30+ 项） | ✅（只读预检） | — | — | ✅（git 序列 + npm 引导） | 发布就绪审查：官方文档符合性 + 静态体检 + 发布引导 |
 | [dsh-plugin-check](https://github.com/dsh-external/dsh-plugin-check) | — | ✅ | — | — | — | — | 插件健康检查（manifest/patch 格式、构建陷阱、hub 收录） |
-| [zoahdev/dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) | — | ✅ | ✅ | ✅（fresh-profile 安装） | ✅ | ✅（check/preflight 判定） | 运行级验证：装包、安装、供应链预检、环境诊断 |
+| [zoahdev/dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) | — | ✅ | ✅ | ✅（fresh-profile 安装） | ✅ | ⚠️（preflight/check 判定，无 git 序列） | 运行级验证：装包、安装、供应链预检、环境诊断 |
 | [dsh-test-drive](https://github.com/PerryLink/dsh-test-drive) | — | — | — | ✅（装-冒烟-卸） | — | — | 隔离 DSH_HOME 里的插件装-冒烟-卸实测 |
 | [dsh-inspect](https://github.com/dsh-external/dsh-inspect) | — | ✅（对抗式） | — | — | — | — | checkup → fix → review 对抗式闭环 |
 | [dsh-review-loop](https://github.com/wuxiangru915/dsh-review-loop) | — | — | — | — | — | — | 增量 diff 审查循环（面向代码，非插件体检） |
@@ -111,12 +111,12 @@ dsh 生态中做「插件健康/审查/验证」的工具不止一个，下表�
 | [dsh-verification-receipt](https://github.com/030611/dsh-verification-receipt) | — | — | — | — | — | — | 每轮工具计数与验证信号写入本地 JSONL |
 | [dsh-doctor](https://github.com/ciceroyang/dsh-doctor) | — | — | — | — | ✅ | — | 一键本地环境健康检查（版本/端口/配置/会话日志） |
 
-**结论**：本插件独有的是**「文档新鲜度检查」与「发布命令引导」**两环——其余工具都不覆盖；静态规范检查与部分工具重叠，但侧重不同（对照官方 basic 文档 + 骨架经验规则的手写清单）。安装级验证与环境诊断分别由对应工具承担，本插件刻意不做（见诚实边界）；需要完整发布体检时，可先跑本插件过规范，再配合安装/环境验证工具补全运行侧。
+**结论**：本插件独有的是**「文档新鲜度检查」与「git commit/tag/push 命令序列生成」**两项——前者其余工具全覆盖不到；后者 zoahdev 仅有 `preflight/check` 判定（评估是否就绪、供选择发布路径），但不生成可直接执行的发布命令序列（见对比表中的 ⚠️）。静态规范检查与部分工具重叠，但侧重不同（对照官方 basic 文档 + 骨架经验规则的手写清单）。安装级验证与环境诊断分别由对应工具承担，本插件刻意不做（见诚实边界）；需要完整发布体检时，可先跑本插件过规范，再配合安装/环境验证工具补全运行侧。
 
 ## Changelog
 
+- v0.2.3 — 对比表校准：zoahdev 的「发布引导」改为 ⚠️ 部分符合（有 preflight/check 判定、无 git 命令序列）；结论同步为「文档新鲜度 + git 序列生成」两项独有。
 - v0.2.2 — README 清理：移除文末模板出处引用。
-- v0.2.1 — README 重构：主文不再点名其他插件，同类工具对比移至文末全景表。
 - v0.2.0 — 更名 **dsh-plugin-pub-review**（原 dsh-plugin-doctor，npm 旧包已弃用），明确「发布就绪审查」定位：官方文档符合性 + 静态规范体检 + 发布引导；文档状态路径改为 `~/.dsh/plugin-pub-review/`。
 - v0.1.1 — 启动横幅与 `/doctor-help` 引导命令；README 补全流程/检查点/架构/配置说明。
 - v0.1.0 — 首个发布：三个工具完整实现（docs-check 多源哈希对比、plugin-review 静态体检、plugin-publish 预检 + 命令生成）、两个斜杠命令、vitest 用例。
