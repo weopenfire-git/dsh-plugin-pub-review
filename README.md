@@ -11,23 +11,19 @@
  (docs-check)     (plugin-review)    (✅/❌/⚠️ 药方)   (plugin-publish)
 ```
 
-## 🎯 定位（与同类工具的分工）
+## 定位
 
-dsh 生态里做「插件体检」的工具不少，本插件的分工是**发布就绪审查**：
+发布就绪审查回答两件事：**这个插件能不能发**、**怎么发**。
 
-| 层面 | 工具 | 干什么 |
-|---|---|---|
-| 规范与文档 | **dsh-plugin-pub-review（本插件）** | 对照**官方文档**查规范：文档新鲜度 + 30+ 项静态检查 + 发布命令引导 |
-| 运行与安装 | [zoahdev/dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) | 运行级验证：真实装包、fresh-profile 安装、供应链/环境诊断 |
-
-- 它验证「装不装得上、安不安全」；本插件回答「**符不符合官方文档与规范、怎么发**」。
-- 本插件的 publish 预检止步于 `npm pack --dry-run`；安装级验证是 zoahdev 版的范畴。
-- 互补不重叠，可先后使用：先跑本插件过规范，再跑它做运行验证。
+1. **先核官方文档**：docs-check 检查官方插件开发文档有没有更新——避免用过期的规范「错诊」；
+2. **再按规范体检**：plugin-review 对照官方 basic 文档与骨架经验规则做 30+ 项静态检查，输出 ✅/⚠️/❌ 清单、修复药方与 Ready / Not-Ready 判定；
+3. **最后引导发布**：plugin-publish 只读预检（typecheck/test/build/npm pack），生成 git commit/tag/push 命令序列——`npm publish` 始终留给你手动执行（2FA 屏障）。
 
 ## 🚀 现状
 
 | 版本 | 亮点 |
 |---|---|
+| v0.2.1 | README 重构：主文不再点名其他插件，同类工具对比移至文末 |
 | v0.2.0 | 更名 dsh-plugin-pub-review（原 dsh-plugin-doctor），突出「发布就绪审查」定位 |
 | v0.1.x | 三个工具 + 斜杠命令 + 启动横幅 + 测试 |
 
@@ -100,8 +96,28 @@ dsh 生态里做「插件体检」的工具不少，本插件的分工是**发�
 
 > 独立插件仓库，符合 dsh 插件规范（骨架见 hme-plugin 的 `dsh-plugin-skeleton` skill）。
 
+## 同类工具对比
+
+dsh 生态中做「插件健康/审查/验证」的工具不止一个，下表按**覆盖环节**对比（以各仓库官方描述为准，「—」表示该工具描述未覆盖此环节）：
+
+| 工具 | 文档新鲜度 | 静态规范检查 | 构建/打包 | 安装验证 | 环境诊断 | 发布引导 | 官方定位（摘要） |
+|---|---|---|---|---|---|---|---|
+| **dsh-plugin-pub-review（本插件）** | ✅ | ✅（30+ 项） | ✅（只读预检） | — | — | ✅（git 序列 + npm 引导） | 发布就绪审查：官方文档符合性 + 静态体检 + 发布引导 |
+| [dsh-plugin-check](https://github.com/dsh-external/dsh-plugin-check) | — | ✅ | — | — | — | — | 插件健康检查（manifest/patch 格式、构建陷阱、hub 收录） |
+| [zoahdev/dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) | — | ✅ | ✅ | ✅（fresh-profile 安装） | ✅ | ✅（check/preflight 判定） | 运行级验证：装包、安装、供应链预检、环境诊断 |
+| [dsh-test-drive](https://github.com/PerryLink/dsh-test-drive) | — | — | — | ✅（装-冒烟-卸） | — | — | 隔离 DSH_HOME 里的插件装-冒烟-卸实测 |
+| [dsh-inspect](https://github.com/dsh-external/dsh-inspect) | — | ✅（对抗式） | — | — | — | — | checkup → fix → review 对抗式闭环 |
+| [dsh-review-loop](https://github.com/wuxiangru915/dsh-review-loop) | — | — | — | — | — | — | 增量 diff 审查循环（面向代码，非插件体检） |
+| [dsh-doublecheck](https://github.com/PerryLink/dsh-doublecheck) | — | ✅（门禁） | — | — | — | — | 工程纪律闭环：需求盘问、红绿测试门禁、对抗交付评审 |
+| [dsh-ops-skill](https://github.com/dragon43pp/dsh-ops-skill) | — | — | — | — | — | — | 运行时可靠性：状态快照、升级差异、回归检查 |
+| [dsh-verification-receipt](https://github.com/030611/dsh-verification-receipt) | — | — | — | — | — | — | 每轮工具计数与验证信号写入本地 JSONL |
+| [dsh-doctor](https://github.com/ciceroyang/dsh-doctor) | — | — | — | — | ✅ | — | 一键本地环境健康检查（版本/端口/配置/会话日志） |
+
+**结论**：本插件独有的是**「文档新鲜度检查」与「发布命令引导」**两环——其余工具都不覆盖；静态规范检查与部分工具重叠，但侧重不同（对照官方 basic 文档 + 骨架经验规则的手写清单）。安装级验证与环境诊断分别由对应工具承担，本插件刻意不做（见诚实边界）；需要完整发布体检时，可先跑本插件过规范，再配合安装/环境验证工具补全运行侧。
+
 ## Changelog
 
+- v0.2.1 — README 重构：主文不再点名其他插件，同类工具对比移至文末全景表。
 - v0.2.0 — 更名 **dsh-plugin-pub-review**（原 dsh-plugin-doctor，npm 旧包已弃用），明确「发布就绪审查」定位：官方文档符合性 + 静态规范体检 + 发布引导；文档状态路径改为 `~/.dsh/plugin-pub-review/`。
 - v0.1.1 — 启动横幅与 `/doctor-help` 引导命令；README 补全流程/检查点/架构/配置说明。
 - v0.1.0 — 首个发布：三个工具完整实现（docs-check 多源哈希对比、plugin-review 静态体检、plugin-publish 预检 + 命令生成）、两个斜杠命令、vitest 用例。

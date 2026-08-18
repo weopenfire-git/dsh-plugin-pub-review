@@ -14,6 +14,6 @@ describe('Config', () => {
 
 describe('VERSION', () => {
   it('matches package.json', () => {
-    expect(VERSION).toBe('0.2.0')
+    expect(VERSION).toBe('0.2.1')
   })
 })
